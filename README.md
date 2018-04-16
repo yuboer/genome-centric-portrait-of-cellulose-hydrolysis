@@ -9,12 +9,12 @@
 
   Below is the command line we applied to HMM scan all the MAGs in the folder of ./five_genomes/faa/, all the files in this folder were   amino acid seuquences, and the suffix  was ".faa", command lines under the linux operation system
 
-  # hmmpress dbCAN-fam-HMMs.txt
-  # find ./five_genomes/faa -name "*.faa" | while read line ; do hmmscan --domtblout ${line}.out.dm dbCAN-fam-HMMs.txt $line >          ${line}.out; done
-  # find ./five_genomes/faa -name "*.out.dm"|while read line ; do sh hmmscan-parser.sh $line > ${line}.ps; done
-  # find ./five_genomes/faa -name "*.out.dm.ps" ! -size 0 > filteredhmmout.list
-  # mkdir dbCAN_annotation_results
-  # mv *.out.dm.ps > ./dbCAN_annotation_results
+  #hmmpress dbCAN-fam-HMMs.txt
+  #find ./five_genomes/faa -name "*.faa" | while read line ; do hmmscan --domtblout ${line}.out.dm dbCAN-fam-HMMs.txt $line >          ${line}.out; done
+  #find ./five_genomes/faa -name "*.out.dm"|while read line ; do sh hmmscan-parser.sh $line > ${line}.ps; done
+  #find ./five_genomes/faa -name "*.out.dm.ps" ! -size 0 > filteredhmmout.list
+  #mkdir dbCAN_annotation_results
+  #mv *.out.dm.ps > ./dbCAN_annotation_results
 
 #partII:
 
