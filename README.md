@@ -2,6 +2,7 @@
 #This pipeline is developed to pair the dbCAN annotation platform to interpret MAGs on the specific function niche of cellulose hydrolysis
 
 partI:
+
 #  Annotate the CAZy modules in the MAGs through the HMM scan of dbCAN, please refer to http://csbl.bmb.uga.edu/dbCAN/ for more detailed    info
 # Below is the command line we applied to HMM scan all the MAGs in the folder of ./five_genomes/faa/, all the files in this folder were amino acid seuquences, and the suffix  was ".faa", command lines under the linux operation system
 
