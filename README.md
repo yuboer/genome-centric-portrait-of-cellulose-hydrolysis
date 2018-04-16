@@ -3,23 +3,18 @@
 
 #partI:
 
-1. Annotate the CAZy modules in the MAGs through the HMM scan of dbCAN, please refer to http://csbl.bmb.uga.edu/dbCAN/ for more detailed    documentation
+1. Annotate the CAZy modules in the MAGs through the HMM scan of dbCAN, please  also refer to http://csbl.bmb.uga.edu/dbCAN/ for more detailed    documentation
    
    Need to Download :  the database "dbCAN-fam-HMMs.txt" and also the "hmmscan-parser.sh"script from http://csbl.bmb.uga.edu/dbCAN/
-   
-   hmm scan against dbCAN-fam_HMM can be run in linux through the following three steps
-    ** 1st run: format HMM db: hmmpress dbCAN-fam-HMMs.txt 
-    ** 2nd run: hmmscan --domtblout yourfile.out.dm dbCAN-fam-HMMs.txt yourfile > yourfile.out
-    ** 3rd run: sh hmmscan-parser.sh yourfile.out.dm > yourfile.out.dm.ps 
 
   Below is the command line we applied to HMM scan all the MAGs in the folder of ./five_genomes/faa/, all the files in this folder were   amino acid seuquences, and the suffix  was ".faa", command lines under the linux operation system
 
-  ** hmmpress dbCAN-fam-HMMs.txt
-  ** find ./five_genomes/faa -name "*.faa" | while read line ; do hmmscan --domtblout ${line}.out.dm dbCAN-fam-HMMs.txt $line >          ${line}.out; done
-  ** find ./five_genomes/faa -name "*.out.dm"|while read line ; do sh hmmscan-parser.sh $line > ${line}.ps; done
-  ** find ./five_genomes/faa -name "*.out.dm.ps" ! -size 0 > filteredhmmout.list
-  ** mkdir dbCAN_annotation_results
-  ** mv *.out.dm.ps > ./dbCAN_annotation_results
+  # hmmpress dbCAN-fam-HMMs.txt
+  # find ./five_genomes/faa -name "*.faa" | while read line ; do hmmscan --domtblout ${line}.out.dm dbCAN-fam-HMMs.txt $line >          ${line}.out; done
+  # find ./five_genomes/faa -name "*.out.dm"|while read line ; do sh hmmscan-parser.sh $line > ${line}.ps; done
+  # find ./five_genomes/faa -name "*.out.dm.ps" ! -size 0 > filteredhmmout.list
+  # mkdir dbCAN_annotation_results
+  # mv *.out.dm.ps > ./dbCAN_annotation_results
 
 #partII:
 
