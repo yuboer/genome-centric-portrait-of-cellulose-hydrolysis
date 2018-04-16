@@ -6,6 +6,7 @@
 1. Annotate the CAZy modules in the MAGs through the HMM scan of dbCAN, please refer to http://csbl.bmb.uga.edu/dbCAN/ for more detailed    documentation
    
    Need to Download :  the database "dbCAN-fam-HMMs.txt" and also the "hmmscan-parser.sh"script from http://csbl.bmb.uga.edu/dbCAN/
+   
    hmm scan against dbCAN-fam_HMM can be run in linux through the following three steps
     ** 1st run: format HMM db: hmmpress dbCAN-fam-HMMs.txt 
     ** 2nd run: hmmscan --domtblout yourfile.out.dm dbCAN-fam-HMMs.txt yourfile > yourfile.out
