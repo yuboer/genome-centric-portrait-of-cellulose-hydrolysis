@@ -1,7 +1,11 @@
 # genome-centric-portrait-of-cellulose-hydrolysis
 #This pipeline is developed to pair the dbCAN annotation platform to interpret MAGs on the specific function niche of cellulose hydrolysis
 
-#partI:
+
+-------------------------------------------------------------------------------------------------------------------------------------
+
+
+partI:
 
 1. Annotate the CAZy modules in the MAGs through the HMM scan of dbCAN, please  also refer to http://csbl.bmb.uga.edu/dbCAN/ for more detailed    documentation
    
@@ -23,7 +27,10 @@
 
 
 
-#partII:
+-----------------------------------------------------------------------------------------------------------------------------------
+
+
+partII:
 
 Files in the folder of ./dbCAN_annotation_results/ were the input file to the annotation pipeline developed in this study,
 
