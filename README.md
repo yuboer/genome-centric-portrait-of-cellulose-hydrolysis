@@ -42,3 +42,5 @@ Files in the folder of ./dbCAN_annotation_results/ were the input file to the an
 2. Visualization of the CAZy modules' arrangement along genes in each MAGs (optional)
 
     Run the R script named as "genoplot_CAZy_in_bins.R", a folder will be generated holding a corresponding number of PDF files with the     visualization information on the CAZy modules' arrangement along genes in each genome
+    
+-----------------------------------------------------------------------------------------------------------------------------
