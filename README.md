@@ -5,7 +5,7 @@
 -------------------------------------------------------------------------------------------------------------------------------------
 
 
-# partI: pre-annotation through the dbCAN platform
+# partI: pre-annotation through the dbCAN platform (in batch mode)
 
 1. Annotate the CAZy modules in the MAGs through the HMM scan of dbCAN, please  also refer to http://csbl.bmb.uga.edu/dbCAN/ for more detailed    documentation
    
