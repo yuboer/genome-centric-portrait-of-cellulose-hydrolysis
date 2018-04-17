@@ -5,7 +5,7 @@
 -------------------------------------------------------------------------------------------------------------------------------------
 
 
-# partI: pre-annotation through the dbCAN platform (in batch mode)
+# part I: pre-annotation through the dbCAN platform (in batch mode)
 
 1. Annotate the CAZy modules in the MAGs through the HMM scan of dbCAN, please  also refer to http://csbl.bmb.uga.edu/dbCAN/ for more detailed    documentation
    
@@ -30,7 +30,7 @@
 -----------------------------------------------------------------------------------------------------------------------------------
 
 
-# partII: genome-centric portrait pipeline proposed in this study
+# part II: genome-centric portrait pipeline proposed in this study
 
 Files in the folder of ./dbCAN_annotation_results/ were the input file to the annotation pipeline developed in this study,
 
