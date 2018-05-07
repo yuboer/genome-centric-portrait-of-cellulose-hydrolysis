@@ -77,3 +77,7 @@ Files in the folder of ./dbCAN_annotation_results/ were the input file to the an
     Run the R script named as "genoplot_CAZy_in_bins.R", a folder will be generated holding a corresponding number of PDF files with the     visualization information on the CAZy modules' arrangement along genes in each genome
     
 -----------------------------------------------------------------------------------------------------------------------------
+
+#Additional note:
+
+Besides the annotation of the MAGs, this pipeline can aslo be applied in metagenome interpretation if the sequencing depth may not support the reconstruction of enough MAGs of high quality; under which situation, simply take the amino acid sequences of the CDS in a metagenomes as "one draft genome", do conduct the corresponding analysis, to explore the information on the diversity and abundance of the various carbohydrate active genes, apart from the info on the diversity and abundance of the various CAZy modules in a metagnome
