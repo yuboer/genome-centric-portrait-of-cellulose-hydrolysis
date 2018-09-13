@@ -30,7 +30,7 @@
 -----------------------------------------------------------------------------------------------------------------------------------
 
 
-# part II: genome-centric portrait pipeline proposed in this study
+# part II: genome-centric portrait
 
 Files in the folder of ./dbCAN_annotation_results/ were the input file to the annotation pipeline developed in this study,
 
