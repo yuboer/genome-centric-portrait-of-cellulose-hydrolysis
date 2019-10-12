@@ -7,15 +7,14 @@
 
 # part I: pre-annotation through the dbCAN platform (in batch mode)
 
-1. Annotate the CAZy modules in the MAGs through the HMM scan of dbCAN, please  also refer to http://csbl.bmb.uga.edu/dbCAN/ for more detailed    documentation
+#database abd hmmscan tools
+1. Annotate the CAZy modules in the MAGs through the HMM scan of dbCAN, the database "dbCAN-HMMdb-V8.zip" is downloaded from http://bcb.unl.edu/dbCAN2/download/Databases/
    
-   Need to Download :  the database "dbCAN-fam-HMMs.txt" and also the "hmmscan-parser.sh"script from http://csbl.bmb.uga.edu/dbCAN/
+2. the "hmmscan-parser.gz" is downloaded from http://bcb.unl.edu/dbCAN2/download/Tools/
 
-  Below is the command line (linux system) we applied to HMM scan all the MAGs in the folder of ./five_genomes/faa/, all the files in this folder were   amino acid seuquences, and the suffix of each file was ".faa"
-
-  1) hmmpress dbCAN-fam-HMMs.txt
+  1)  hmmpress dbCAN-fam-HMMs.txt
   
-  2) find ./five_genomes/faa -name "*.faa" | while read line ; do hmmscan --domtblout ${line}.out.dm dbCAN-fam-HMMs.txt $line >          ${line}.out; done
+  2) find ./five_genomes/faa -name "*.faa" | while read line ; do hmmscan --domtblout ${line}.out.dm dbCAN-HMMdb-V8.txt $line >          ${line}.out; done
   
   3) find ./five_genomes/faa -name "*.out.dm"|while read line ; do sh hmmscan-parser.sh $line > ${line}.ps; done
   
