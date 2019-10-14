@@ -7,36 +7,51 @@
 
 # part I: pre-annotation through the dbCAN platform (in batch mode)
 
-#database abd hmmscan tools
-1. Annotate the CAZy modules in the MAGs through the HMM scan of dbCAN, the database "dbCAN-HMMdb-V8.zip" is downloaded from http://bcb.unl.edu/dbCAN2/download/Databases/
+#database and hmm tools need o be downloaded
+1.The database "dbCAN-HMMdb-V8.zip" listed above is downloaded from http://bcb.unl.edu/dbCAN2/download/Databases/,  to annotate the CAZy modules in the MAGs or complete genomes
    
-2. the "hmmscan-parser.gz" is downloaded from http://bcb.unl.edu/dbCAN2/download/Tools/
+2. the "hmmscan-parser.gz" is downloaded from http://bcb.unl.edu/dbCAN2/download/Tools/, "hmmscan-parser.sh" will be used to parse the HMM annotation results
 
-  1)  hmmpress dbCAN-fam-HMMs.txt
-  
-  2) find ./five_genomes/faa -name "*.faa" | while read line ; do hmmscan --domtblout ${line}.out.dm dbCAN-HMMdb-V8.txt $line >          ${line}.out; done
-  
-  3) find ./five_genomes/faa -name "*.out.dm"|while read line ; do sh hmmscan-parser.sh $line > ${line}.ps; done
-  
-  4) find ./five_genomes/faa -name "*.out.dm.ps" ! -size 0 > filteredhmmout.list
-  
-  5) mkdir dbCAN_annotation_results
-  
-  6) mv *.out.dm.ps > ./dbCAN_annotation_results
+#below are command lines for batch annotation of the MAGs throug the dbCAN hmmsearch in linux system
 
+# go to the directory in which locates the dbCAN database, in my case, it is as below, while the user may need to adjust the path accordingly
+cd /home/ywx1845/software/dbCAN_db/
+# format the database for hmmscan
+hmmpress dbCAN-HMMdb-V8.txt
 
+# go to the folder "MAGs_faa", in which are amino acid sequences of the MAGs (with the suffix .faa) to be annotated, in my case, it is as below
+cd /projects/b1052/Wells_b1042/yuboer/MAGs_faa/
+
+# hmmscan; /home/ywx1845/software/dbCAN_db/ is the path of the directory in which locates the formated dbCAN database, the user may need to modify this path
+find . -name "*.faa" | while read line ; do hmmscan --domtblout ${line}.out.dm /home/ywx1845/software/dbCAN_db/dbCAN-HMMdb-V8.txt $line > ${line}.out; done
+
+# parse the hmmscan results
+find . -name "*.out.dm"|while read line ; do sh /home/ywx1845/software/dbCAN/hmmscan-parser.sh $line > ${line}.ps; done
+
+# list the names of MAGs with CAZy modules identified
+find . -name "*.out.dm.ps" ! -size 0 > filteredhmmout.list
+
+# make a directory "dbCAN_annotation_results" and move the parsed hmmscan results to this directory
+mkdir ../dbCAN_annotation_results
+
+mv *.out.dm.ps > ../dbCAN_annotation_results
+
+# the files in the directory "dbCAN_annotation_results" are input files to the following R scripts
 
 -----------------------------------------------------------------------------------------------------------------------------------
 
 
-# part II: genome-centric portrait
+# part II: genome-centric portrait on the corresponding microbes cellulolytic competency
 
-Files in the folder of ./dbCAN_annotation_results/ were the input file to the annotation pipeline developed in this study,
+# Files in the folder of ./dbCAN_annotation_results/ were the input file to the annotation pipeline developed in this study,
 
-1. run the R script named as "gene_pattern_identification_and_draft_genome_cetegorization.R", which will generate 3 files summarizing  detailed information on: 
+# Genome categorization: run the R script named as "genome_categorization_on_cellulolytic_competency.R"
+# Visualization: CAZy arrangment along genes in each of the MAgs, using the R script names as "genoplot_CAZy_in_bins.R"
 
+Notes: 
+a.) Genome categorization by "genome_categorization_on_cellulolytic_competency.R" will generate 3 files summarizing  detailed information on: 
 
-    1) the diversity and abundances of all the CAZy modules identified in each of these 47 genomes, the output file is named as                'seq_cazy_abun_in_bins.tab'
+    1) the diversity and abundances of all the CAZy modules identified in each of the MAG or complete genomes, the output file is named as 'seq_cazy_abun_in_bins.csv'
     
     
     2) preliminarily assign the MAGs into 6 groups, namely:
@@ -54,24 +69,23 @@ Files in the folder of ./dbCAN_annotation_results/ were the input file to the an
        Others or group VI - "not_carbohydrates_degrading_bins", the MAGs harboring none of the above mentioned GH modules
     
     
-    3) further categorization of the MAGs preliminarily assigned in group I - "exo_endo_harboring_bins", into 6 subgroup, namely: 'group        I-a', group 'I-b', 'group I-c', 'group I-d', 'group I-e' and 'group I-f', respectively
+    3) further categorization of the MAGs harboring both the exoglucanase and endoglucanase GH modules, these MAGs were preliminarily assigned in group I as introduced above - "exo_endo_harboring_bins"; these Group I MAGs would be further categorized into 6 subgroups, namely: 'group I-a', group 'I-b', 'group I-c', 'group I-d', 'group I-e' and 'group I-f', respectively
         
-        'group I-a' ---- genomes of model cellulolytic microbes,  cellulosome gene clusters are identified, and these cellulsome gene                            clusters could convery both the assembly of the diverse catalytic components and the CEM complex;
+        'group I-a' ---- genomes of model cellulolytic microbes,  cellulosome gene clusters are identified, and these cellulsome gene  clusters could convery both the assembly of the diverse catalytic components and the CEM complex;
         
-        'group I-b' ---- genomes of proficient cellulolytic microbes,  cellulosome gene clusters are identified, these cellulsome gene                            clusters convery only the assembly of the diverse catalytic components,  and it is some cellulosome-                                    indpendent SH-CBM genes that facilitate the microbe-cellulose contact and the CEM complex                       
+        'group I-b' ---- genomes of proficient cellulolytic microbes,  cellulosome gene clusters are identified, however, the scaffold genes in genomes of this subgroup are in lack of the SLH module. the corresponding cellulsome are not cell surface ahering, and it is that the enzymes encoded by the cellulosome indpendent SH-CBM genes that facilitate the microbe-cellulose contact and the CEM complex;                      
+        'group I-c' ---- genomes identified with cellulosome gene clusters, however, the scaffold genes in genomes of this subgroup are in lack of the SLH module, and unlike the genomes in Group I-b, no cellulosome-independent SH-CBM genes are identified in genomes of Group I-c; the annotation of potential novel cellulose-microbes adhesion mechineries genomes is important in predicting whether the corresponding microbes are cellulolytic or not;
         
-        'group I-c' ---- genomes identified with cellulosome gene clusters, yet are much likely inert in cellulose hydrolysis,                                    cellulosome gene clusters are identified, these cellulsome gene clusters could convery only the assembly of the                          diverse catalytic components,  and no cellulosome-independent SH-CBM genes are identified; genomes would be                              inert in cellulose hydrolysis if no alternative microbe-cellulose contact machineries beyongd the SLH-CBM genes                          would be identified
+        'group I-d' ---- genomes of cellulolytic microbes without cellulosome gene clusters, the microbe-cellulose contact and the CEM   complex are much likely conveyed through enzymes encoded by the cellulosome-independent SLH-CBM genes;
         
-        'group I-d' ---- genomes of cellulolytic microbes without cellulosome gene clusters, the microbe-cellulose contact and the CEM                            complex are much likely conveyed through the cellulosome-independent SLH-CBM genes;
+        'group I-e' ---- genomes with neither cellulosome gene clusters nor the SLH-CBM genes, genes harboring both the cellulase GH     modules and the the cellulose binding CBM mocules are identified; uncertainty are encountered in identifying the cellulolytic capacity of genomes; the annotation of potential novel cellulose-microbes adhesion mechineries genomes is important in predicting whether the corresponding microbes are cellulolytic or not;
         
-        'group I-e' ---- genomes with neither cellulosome gene clusters nor the SLH-CBM genes, genes harboring both the cellulase GH                              modules and the the cellulose binding CBM mocules are identified; uncertainty are encountered in                                        identifying the cellulolytic capacity of genomes in this group
+        'group I-f' ---- genomes of non-cellulolytic microbes; although both exoglucanase and endoglucanase GH modules are identified,   none of these GH modules were observed occurring in same genes with the cellulose-binding CBM modules
         
-        'group I-f' ---- genomes of non-cellulolytic microbes; although both exoglucanase and endoglucanase GH modules are identified,                            none of these GH modules were observed occurring in same genes with the cellulose-binding CBM modules
-        
-        The output file is the one named as "Categorization_and_the_abundance_of_gene_patterns_in_exo_endo_harboring_bins.tab"
+        The output file is the one named as "Abundance_of_gene_pattern_exo_endo.csv"
         
         
-2. Visualization of the CAZy modules' arrangement along genes in each MAGs (optional)
+b). Visualization of the CAZy modules' arrangement along genes in each MAGs (optional)
 
     Run the R script named as "genoplot_CAZy_in_bins.R", a folder will be generated holding a corresponding number of PDF files with the     visualization information on the CAZy modules' arrangement along genes in each genome
     
@@ -79,4 +93,5 @@ Files in the folder of ./dbCAN_annotation_results/ were the input file to the an
 
 #Additional note:
 
-Besides the annotation of the MAGs, this pipeline can aslo be applied in metagenome interpretation if the sequencing depth may not be deep enough to support the reconstruction of enough MAGs of high quality; under which situation, simply take the amino acid sequences of the CDS (protein conding sequences) in a metagenome dataset as "one draft genome", conduct the corresponding analysis, to explore the information on the diversity and abundance of the various carbohydrate active genes, apart from the info on the diversity and abundance of the various CAZy modules in a metagnome
+Besides the annotation of the MAGs, this pipeline can aslo be applied to annotate all the amino acid sequences derived from the metagenome datasets, to get info on: 1) the diversity and abundances of all the CAZy modules identified in the community; 2)whether cellulosome gene clusters were present in the community; 3) the types of the cellulosome gene clusters identified (cell surface adhering or not); 3) diversity and abundance of the carbohydrate active genes in the overall community; to achieve this, each amino acid sequences of a dataset is equivalent to one MAG in the above annotation pipeline.
+
