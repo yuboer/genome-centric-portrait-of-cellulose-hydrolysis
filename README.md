@@ -98,4 +98,4 @@ b). Visualization of the CAZy modules' arrangement along genes in each MAGs (opt
 Besides the annotation of the MAGs, this pipeline can aslo be applied to annotate all the amino acid sequences derived from the metagenome datasets, to get info on: 1) the diversity and abundances of all the CAZy modules identified in the community; 2)whether cellulosome gene clusters were present in the community; 3) the types of the cellulosome gene clusters identified (cell surface adhering or not); 3) diversity and abundance of the carbohydrate active genes in the overall community; to achieve this, each amino acid sequences of a dataset is equivalent to one MAG in the above annotation pipeline.
 
 # inquery could be sent to irenelambiel@gmail.com
-# Feel free to try with the example dataset
+# Feel free to try with the annotation of the example dataset provided
