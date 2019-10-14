@@ -1,54 +1,54 @@
-#----genome-centric-portrait-of-microbes-cellulose-hydrolysing-capacity
-#----This pipeline is developed to pair the dbCAN annotation platform to interpret MAGs on the specific function niche of cellulose hydrolysis
+# genome-centric-portrait-of-microbes-cellulose-hydrolysing-capacity
+# This pipeline is developed to pair the dbCAN annotation platform to interpret MAGs on the specific function niche of cellulose hydrolysis
 
 
 -------------------------------------------------------------------------------------------------------------------------------------
 
 
-#part I: pre-annotation through the dbCAN platform (in batch mode)
+# part I: pre-annotation through the dbCAN platform (in batch mode)
 
-#database and hmm tools need o be downloaded
-#1.The database "dbCAN-HMMdb-V8.zip" listed above is downloaded from http://bcb.unl.edu/dbCAN2/download/Databases/,  to annotate the #CAZy modules in the MAGs or complete genomes
+# database and hmm tools need o be downloaded
+# 1.The database "dbCAN-HMMdb-V8.zip" listed above is downloaded from http://bcb.unl.edu/dbCAN2/download/Databases/,  to annotate the CAZy modules in the MAGs or complete genomes
    
-#2. the "hmmscan-parser.gz" is downloaded from http://bcb.unl.edu/dbCAN2/download/Tools/, "hmmscan-parser.sh" will be used to parse the #HMM annotation results
+# The "hmmscan-parser.gz" is downloaded from http://bcb.unl.edu/dbCAN2/download/Tools/, "hmmscan-parser.sh" will be used to parse the #HMM annotation results
 
-#Below are command lines for batch annotation of the MAGs throug the dbCAN hmmsearch in linux system
+# Below are command lines for batch annotation of the MAGs throug the dbCAN hmmsearch in linux system
 
-#go to the directory in which locates the dbCAN database, in my case, it is as below, while the user may need to adjust the path #accordingly
+# go to the directory in which locates the dbCAN database, in my case, it is as below, while the user may need to adjust the path #accordingly
 cd /home/ywx1845/software/dbCAN_db/
-#format the database for hmmscan
+# format the database for hmmscan
 hmmpress dbCAN-HMMdb-V8.txt
 
-#go to the folder "MAGs_faa", in which are amino acid sequences of the MAGs (with the suffix .faa) to be annotated, in my case, it is as #below
+# go to the folder "MAGs_faa", in which are amino acid sequences of the MAGs (with the suffix .faa) to be annotated, in my case, it is as #below
 cd /projects/b1052/Wells_b1042/yuboer/MAGs_faa/
 
-#hmmscan; /home/ywx1845/software/dbCAN_db/ is the path of the directory in which locates the formated dbCAN database, the user may need #to modify this path
+# hmmscan; /home/ywx1845/software/dbCAN_db/ is the path of the directory in which locates the formated dbCAN database, the user may need to modify this path
 find . -name "*.faa" | while read line ; do hmmscan --domtblout ${line}.out.dm /home/ywx1845/software/dbCAN_db/dbCAN-HMMdb-V8.txt $line > ${line}.out; done
 
-#parse the hmmscan results
+# parse the hmmscan results
 find . -name "*.out.dm"|while read line ; do sh /home/ywx1845/software/dbCAN/hmmscan-parser.sh $line > ${line}.ps; done
 
-#list the names of MAGs with CAZy modules identified
+# list the names of MAGs with CAZy modules identified
 find . -name "*.out.dm.ps" ! -size 0 > filteredhmmout.list
 
-#make a directory "dbCAN_annotation_results" and move the parsed hmmscan results to this directory
+# make a directory "dbCAN_annotation_results" and move the parsed hmmscan results to this directory
 mkdir ../dbCAN_annotation_results
 
 mv *.out.dm.ps > ../dbCAN_annotation_results
 
-#delete the empty files in the folder of "dbCAN_annotation_results"
+# delete the empty files in the folder of "dbCAN_annotation_results"
 
-#the files in the directory "dbCAN_annotation_results" are input files to the following R scripts
+# the non-empty files in the directory "dbCAN_annotation_results" are input files to the following R scripts
 
 -----------------------------------------------------------------------------------------------------------------------------------
 
 
-#part II: genome-centric portrait on the corresponding microbes cellulolytic competency
+# part II: genome-centric portrait on the corresponding microbes cellulolytic competency
 
-#Files in the folder of ./dbCAN_annotation_results/ were the input file to the annotation pipeline developed in this study,
+# Files in the folder of ./dbCAN_annotation_results/ were the input file to the annotation pipeline developed in this study,
 
-#Genome categorization: run the R script named as "genome_categorization_on_cellulolytic_competency.R"
-#Visualization: CAZy arrangment along genes in each of the MAgs, using the R script names as "genoplot_CAZy_in_bins.R"
+# Genome categorization: run the R script named as "genome_categorization_on_cellulolytic_competency.R"
+# Visualization: CAZy arrangment along genes in each of the MAgs, using the R script names as "genoplot_CAZy_in_bins.R"
 
 Notes: 
 a.) Genome categorization by "genome_categorization_on_cellulolytic_competency.R" will generate 3 files summarizing  detailed information on: 
@@ -93,9 +93,9 @@ b). Visualization of the CAZy modules' arrangement along genes in each MAGs (opt
     
 -----------------------------------------------------------------------------------------------------------------------------
 
-#Additional note:
+# Additional note:
 
 Besides the annotation of the MAGs, this pipeline can aslo be applied to annotate all the amino acid sequences derived from the metagenome datasets, to get info on: 1) the diversity and abundances of all the CAZy modules identified in the community; 2)whether cellulosome gene clusters were present in the community; 3) the types of the cellulosome gene clusters identified (cell surface adhering or not); 3) diversity and abundance of the carbohydrate active genes in the overall community; to achieve this, each amino acid sequences of a dataset is equivalent to one MAG in the above annotation pipeline.
 
-#inquery could be sent to irenelambiel@gmail.com
+# inquery could be sent to irenelambiel@gmail.com
 
