@@ -1,4 +1,4 @@
-# this script was used to generate the circle tree
+# this script was used to generate the circle tree in the paper
 setwd("/workhome/yuboer_CAZy_in_2786complete_genome")
 a<-rownames(seq_cazy_temp5)
 seq_cazy_temp5$Assembly.Accession<-a
