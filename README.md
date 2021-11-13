@@ -4,10 +4,11 @@ This pipeline is developed to pair the dbCAN annotation platform to interpret ge
 -------------------------------------------------------------------------------------------------------------------------------------
 
 # part I: genome-centric CAZy annotation through the dbCAN platform (in batch mode)
+
 dbCAN database and hmm tools need to be downloaded
 The database "dbCAN-HMMdb-V8.zip" is downloaded from http://bcb.unl.edu/dbCAN2/download/Databases/  
-The "hmmscan-parser.gz" is downloaded from http://bcb.unl.edu/dbCAN2/download/Tools/, "hmmscan-parser.sh" will be used to parse the #HMM annotation results
-for batch annotation of a large number of genomes, follow steps in "dbcan_annotation.sh"
+The "hmmscan-parser.gz" is downloaded from http://bcb.unl.edu/dbCAN2/download/Tools/, "hmmscan-parser.sh" will be used to parse the #HMM annotation results, for batch annotation of a large number of genomes, follow steps in "dbcan_annotation.sh"
+
 -----------------------------------------------------------------------------------------------------------------------------------
 
 # part II: genome-centric portrait of the corresponding anaerobes' cellulose-hydrolyzing capacity
@@ -30,12 +31,14 @@ Putative cellulolytic anaerobes are only to be expected for genomes assigned int
 4) 'group I-d' ---- genomes of cellulolytic anaerobes without cellulosome gene clusters. Microbe-cellulose adhesion and CEM complex formaiton in anaerobes of this group is likely initiated by enzymes encoded by genes harboring both the SLH module and the cellulose-binding CBM module
 5) 'group I-e' ---- genomes with neither cellulosome gene clusters nor the SLH-CBM genes, uncertainty are encountered in predicting the cellulolytic capacity of anaerobes in this group; potential novel microbe-cellulose adhesion mechanism awaits to be uncovered for cellulolytic anaerobes in this group;
 
+------------------------------------------------------------------------------------------------------------------------------
+
 # part III: Visualizetion of the CAZy arrangment along genes in each genome, in batch mode
 apply the R script named as "genoplot_CAZy_in_genomes.R"
    
 -----------------------------------------------------------------------------------------------------------------------------
 
-Additional note:
+# Additional notes:
 
 Besides the annotation of genomes, this pipeline can aslo be applied in annotation of metagenome dataset as a whole (in which case, to interpretate each metagenome dtaset as one single faa file), to get info on: 1) abundance of each CAZy modules in the community; 2)whether cellulosome gene clusters are present in the community or not; 3) abundance of each type of CAZy gene in the community
 
