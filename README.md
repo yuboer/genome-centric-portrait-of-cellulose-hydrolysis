@@ -62,7 +62,10 @@ Additional note:
 Besides the annotation of genomes, this pipeline can aslo be applied in annotation of metagenome dataset as a whole (in which case, to interpretate each metagenome dtaset as one single faa file), to get info on: 1) abundance of each CAZy modules in the community; 2)whether cellulosome gene clusters are present in the community or not; 3) abundance of each type of CAZy gene in the community
 
 Inquery could be sent to yuboer.abbado@outlook.com
-Feel free to try this pipeline with the example dataset provided in the zip folder names as "example_datasets_and_results.zip"
+/Feel free to try this pipeline with the example dataset provided in the zip folder names as "example_datasets_and_results.zip"
 1) the test dataset is a collection of .faa.out.pm.ds files in the subfolder named as "dbcan_results";
 2) resulting files of the genome-wide annotation and categorization are in the subfolder named as "genome_categorization_result_files";
 3) resulting files from genoplot visualization are in the subfolder named as "genoplot_results"
+4) the two custom scripts applied in this part of analysis are also included in this folder
+
+And feel free to drop a message in case errors are encountered
