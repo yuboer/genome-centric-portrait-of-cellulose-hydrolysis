@@ -7,7 +7,7 @@ This pipeline is developed to pair the dbCAN annotation platform to interpret ge
 
 dbCAN database and hmm tools need to be downloaded
 The database "dbCAN-HMMdb-V8.zip" is downloaded from http://bcb.unl.edu/dbCAN2/download/Databases/  
-The "hmmscan-parser.gz" is downloaded from http://bcb.unl.edu/dbCAN2/download/Tools/, "hmmscan-parser.sh" will be used to parse the #HMM annotation results, for batch annotation of a large number of genomes, follow steps in "dbcan_annotation.sh"
+The "hmmscan-parser.gz" is downloaded from http://bcb.unl.edu/dbCAN2/download/Tools/, "hmmscan-parser.sh" will be used to parse the HMM annotation results, for batch annotation of a large number of genomes, follow steps in "dbcan_annotation.sh"
 
 -----------------------------------------------------------------------------------------------------------------------------------
 
