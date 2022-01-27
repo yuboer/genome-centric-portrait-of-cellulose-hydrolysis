@@ -18,7 +18,7 @@ find . -name "*.out.dm"|while read line ; do sh /home/ywx1845/software/dbCAN/hmm
 #6) list the names of genomes with CAZy modules identified
 find . -name "*.out.dm.ps" ! -size 0 > filteredhmmout.list
 #7) make a directory and move the parsed hmmscan results to this directory, in my case, the directory name is 'dbCAN_annotation_results'
-mkdir ../dbCAN_annotation_results
-mv *.out.dm.ps > ../dbCAN_annotation_results
-#8) delete the empty files in the folder of "dbCAN_annotation_results"
-#9) the non-empty files in the directory "dbCAN_annotation_results" are input files to the following R scripts
+mkdir ../dbCAN_results
+mv *.out.dm.ps > ../dbCAN_results
+#8) delete the empty files in the folder of "dbCAN_results"
+#9) the non-empty files in the directory "dbCAN_results" are input files to the following R scripts
