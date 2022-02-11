@@ -18,3 +18,6 @@ docker build -t cellulosic_genome_annotation .
 #---note: 1) using the -v argument tells Docker which local folder to map to #the created folders inside the container
 #---2) with the command line below, the container will get aceess to data #in the local folder "Desktop/for_docker_image/01_data", and the output from the workflow "03_output" will be saved locally at "Desktop/for_docker_image/03_output"
 docker run -it --rm -v ~/"Desktop/for_docker_image"/01_data:/01_data -v ~/"Desktop/for_docker_image"/03_output:/03_output cellulosic_genome_annotation
+
+
+#### feel free to download this "for_docker_image" folder as a whole and try with the data provided in the subdirectory of "01_data"
