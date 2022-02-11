@@ -50,7 +50,7 @@ LPMO<-c('AA9','AA10','AA11')
 exo<-c('GH6','GH9','GH48',GH5,'GH5')
 endo<-c('GH7','GH8','GH12','GH44','GH45','GH51','GH61','GH124')
 #cellulose-active GH modules, i.e., both exoglucanase and endoglucanase GH modules 
-cGH<-c(exo,endo)
+cGH<-c(exo,endo,LPMO)
 #cellulose-binding CBM modules
 cCBM<-c("CBM1","CBM2","CBM3","CBM4","CBM6","CBM7","CBM8","CBM9","CBM10","CBM11","CBM16","CBM17","CBM28","CBM30","CBM37","CBM44","CBM46","CBM49","CBM63","CBM64")
 #hemicellulose-active GH modules
@@ -211,6 +211,10 @@ Abundance_of_cazy_gene_exo_endo$free_scaffold<-c(0)
 Abundance_of_cazy_gene_exo_endo$SLH_cCBM<-c(0)
 #B'
 Abundance_of_cazy_gene_exo_endo$SLH_CBM<-c(0)
+#dok_cCBM B2-t
+Abundance_of_cazy_gene_exo_endo$dok_cCBM<-c(0)
+#dok_CBM B2'-t
+Abundance_of_cazy_gene_exo_endo$dok_CBM<-c(0)
 #C
 Abundance_of_cazy_gene_exo_endo$cGH_cCBM<-c(0)
 #C
@@ -232,7 +236,7 @@ Abundance_of_cazy_gene_exo_endo$oligosaccharidase<-c(0)
 
 #str(Abundance_of_cazy_gene_exo_endo)
 ####
-Abundance_of_cazy_gene_exo_endo$SLH_cohesin<-c(0)
+#Abundance_of_cazy_gene_exo_endo$SLH_cohesin<-c(0)
 Abundance_of_cazy_gene_exo_endo$exo_dok<-c(0)
 Abundance_of_cazy_gene_exo_endo$endo_dok<-c(0)
 Abundance_of_cazy_gene_exo_endo$xylanase_GH_dok<-c(0)
@@ -297,6 +301,16 @@ for (j in 1: length(exo_endo_harboring_genomes_names))
     {
       Abundance_of_cazy_gene_exo_endo[Abundance_of_cazy_gene_exo_endo$genome %in% exo_endo_harboring_genomes_names[j],"SLH_CBM"]=Abundance_of_cazy_gene_exo_endo[Abundance_of_cazy_gene_exo_endo$genome %in% exo_endo_harboring_genomes_names[j],"SLH_CBM"]+1
     }
+    # B2-a dok_cCBM:      dok>=1, sum(selcbm)>=1
+    if (tmp_cazy_df_expan[tmp_cazy_df_expan$tmp_cazy %in% 'dockerin','Freq']>=1 & sum(tmp_cazy_df_expan$Freq[tmp_cazy_df_expan$tmp_cazy %in% cCBM])>=1)
+    {
+      Abundance_of_cazy_gene_exo_endo[Abundance_of_cazy_gene_exo_endo$genome %in% exo_endo_harboring_genomes_names[j],"dok_cCBM"]=Abundance_of_cazy_gene_exo_endo[Abundance_of_cazy_gene_exo_endo$genome %in% exo_endo_harboring_genomes_names[j],"dok_cCBM"]+1
+    }
+    # B2'-a dok_CBM(_gh):      slh>=1, sum(cbm)>=1
+    if (tmp_cazy_df_expan[tmp_cazy_df_expan$tmp_cazy %in% 'dockerin','Freq']>=1 & sum(tmp_cazy_df_expan$Freq[tmp_cazy_df_expan$tmp_cazy %in% all_CBM])>=1)
+    {
+      Abundance_of_cazy_gene_exo_endo[Abundance_of_cazy_gene_exo_endo$genome %in% exo_endo_harboring_genomes_names[j],"dok_CBM"]=Abundance_of_cazy_gene_exo_endo[Abundance_of_cazy_gene_exo_endo$genome %in% exo_endo_harboring_genomes_names[j],"dok_CBM"]+1
+    }
     # C cGH_cCBM(_gh):     sum(slegh>=1, sum(selcbm)>=1
     if (sum(tmp_cazy_df_expan$Freq[tmp_cazy_df_expan$tmp_cazy %in% cGH])>=1 & sum(tmp_cazy_df_expan$Freq[tmp_cazy_df_expan$tmp_cazy %in% cCBM])>=1)
     {
@@ -346,10 +360,10 @@ for (j in 1: length(exo_endo_harboring_genomes_names))
     }
     ######
     #SLH_cohesin
-    if (tmp_cazy_df_expan[tmp_cazy_df_expan$tmp_cazy %in% 'SLH','Freq']>=1 & tmp_cazy_df_expan[tmp_cazy_df_expan$tmp_cazy %in% 'cohesin','Freq']>=1)
-    {
-      Abundance_of_cazy_gene_exo_endo[Abundance_of_cazy_gene_exo_endo$genome %in% exo_endo_harboring_genomes_names[j],"SLH_cohesin"]=Abundance_of_cazy_gene_exo_endo[Abundance_of_cazy_gene_exo_endo$genome %in% exo_endo_harboring_genomes_names[j],"SLH_cohesin"]+1 
-    }
+    #if (tmp_cazy_df_expan[tmp_cazy_df_expan$tmp_cazy %in% 'SLH','Freq']>=1 & tmp_cazy_df_expan[tmp_cazy_df_expan$tmp_cazy %in% 'cohesin','Freq']>=1)
+    #{
+    #  Abundance_of_cazy_gene_exo_endo[Abundance_of_cazy_gene_exo_endo$genome %in% exo_endo_harboring_genomes_names[j],"SLH_cohesin"]=Abundance_of_cazy_gene_exo_endo[Abundance_of_cazy_gene_exo_endo$genome %in% exo_endo_harboring_genomes_names[j],"SLH_cohesin"]+1 
+    #}
     #exo_dok
     if (tmp_cazy_df_expan[tmp_cazy_df_expan$tmp_cazy %in% 'dockerin','Freq']>=1 & sum(tmp_cazy_df_expan$Freq[tmp_cazy_df_expan$tmp_cazy %in% exo])>=1)
     {
@@ -393,14 +407,21 @@ GroupI_genome_categorization<-Abundance_of_cazy_gene_exo_endo
 GroupI_genome_categorization<-within(GroupI_genome_categorization,{
   category<-NA
   category[attach_scaffold>=1]<-"Group I-a"
-  category[attach_scaffold_0>=1 & attach_scaffold_0t>=1] <-"Group I-a"
-  category[attach_scaffold==0 & attach_scaffold_0>=1 & attach_scaffold_0t==0 & SLH_cCBM>=1] <-"Group I-b"
-  category[attach_scaffold==0 & attach_scaffold_0 ==0 & free_scaffold>=1 & SLH_cCBM>=1]<-"Group I-b"
-  category[attach_scaffold==0 & attach_scaffold_0>=1 & attach_scaffold_0t==0 & SLH_cCBM==0]<-"Group I-c"
-  category[attach_scaffold==0 & attach_scaffold_0==0 & free_scaffold>=1 & SLH_cCBM==0 ]<-"Group I-c"
-  category[attach_scaffold==0 & attach_scaffold_0==0 & free_scaffold==0 & SLH_cCBM>=1]<-"Group I-d"
-  category[attach_scaffold==0 & attach_scaffold_0==0 & free_scaffold==0 & SLH_cCBM==0 & cGH_cCBM>=1]<-"Group I-e"
-  category[attach_scaffold==0 & attach_scaffold_0==0 & free_scaffold==0 & SLH_cCBM==0 & cGH_cCBM==0]<-"Group I-f"
+  #category[attach_scaffold_0>=1] <-"Group I-a"
+  category[attach_scaffold==0 & attach_scaffold_0>=1 & attach_scaffold_0t>=1] <-"Group I-a"
+  category[attach_scaffold==0 & attach_scaffold_0>=1 & attach_scaffold_0t==0 & SLH_CBM>=1] <-"Group I-b"
+  #category[attach_scaffold==0 & attach_scaffold_0>=1 & attach_scaffold_0t==0 & SLH_cCBM>=1] <-"Group I-b"
+  category[attach_scaffold==0 & attach_scaffold_0>=1 & attach_scaffold_0t==0 & SLH_CBM==0] <-"Group I-b2"
+  category[attach_scaffold==0 & attach_scaffold_0 ==0 & free_scaffold>=1 & SLH_CBM>=1]<-"Group I-b"
+  #category[attach_scaffold==0 & attach_scaffold_0 ==0 & free_scaffold>=1 & SLH_cCBM>=1]<-"Group I-b"
+  category[attach_scaffold==0 & attach_scaffold_0 ==0 & free_scaffold>=1 & attach_scaffold_0t>=1 & dok_CBM>=1]<-"Group I-b"
+  category[attach_scaffold==0 & attach_scaffold_0 ==0 & free_scaffold>=1 & SLH_CBM==0 & attach_scaffold_0t>=1 & dok_CBM==0]<-"Group I-b2"
+  category[attach_scaffold==0 & attach_scaffold_0==0 & free_scaffold>=1 & SLH_CBM==0 & attach_scaffold_0t==0]<-"Group I-c"
+  category[attach_scaffold==0 & attach_scaffold_0==0 & free_scaffold==0 & SLH_CBM>=1]<-"Group I-d"
+  category[attach_scaffold==0 & attach_scaffold_0==0 & free_scaffold==0 & attach_scaffold_0t>=1 & dok_CBM>=1]<-"Group I-d"
+  category[attach_scaffold==0 & attach_scaffold_0==0 & free_scaffold==0 & SLH_CBM==0 & attach_scaffold_0t>=1 & dok_CBM==0]<-"Group I-d2"
+  category[attach_scaffold==0 & attach_scaffold_0==0 & free_scaffold==0 & SLH_cCBM==0 & attach_scaffold_0t==0 & cGH_cCBM>=1]<-"Group I-e"
+  category[attach_scaffold==0 & attach_scaffold_0==0 & free_scaffold==0 & SLH_cCBM==0 & attach_scaffold_0t==0 & cGH_cCBM==0]<-"Group I-f"
 })
 #
 GroupI_CAZyinfo_complete<-merge(GroupI_genome_categorization,seq_cazy_abun_in_genomes_1,by="genome",all=F)
@@ -457,6 +478,10 @@ Abundance_of_cazy_gene_groupII$free_scaffold<-c(0)
 Abundance_of_cazy_gene_groupII$SLH_cCBM<-c(0)
 #B'
 Abundance_of_cazy_gene_groupII$SLH_CBM<-c(0)
+#dok_cCBM B2-t
+Abundance_of_cazy_gene_groupII$dok_cCBM<-c(0)
+#dok_CBM B2'-t
+Abundance_of_cazy_gene_groupII$dok_CBM<-c(0)
 #C
 Abundance_of_cazy_gene_groupII$cGH_cCBM<-c(0)
 #C
@@ -478,7 +503,7 @@ Abundance_of_cazy_gene_groupII$oligosaccharidase<-c(0)
 
 #str(Abundance_of_cazy_gene_groupII)
 ####
-Abundance_of_cazy_gene_groupII$SLH_cohesin<-c(0)
+#Abundance_of_cazy_gene_groupII$SLH_cohesin<-c(0)
 Abundance_of_cazy_gene_groupII$exo_dok<-c(0)
 Abundance_of_cazy_gene_groupII$endo_dok<-c(0)
 Abundance_of_cazy_gene_groupII$xylanase_GH_dok<-c(0)
@@ -544,6 +569,16 @@ for (j in 1: length(groupII_genomes_names))
     {
       Abundance_of_cazy_gene_groupII[Abundance_of_cazy_gene_groupII$genome %in% groupII_genomes_names[j],"SLH_CBM"]=Abundance_of_cazy_gene_groupII[Abundance_of_cazy_gene_groupII$genome %in% groupII_genomes_names[j],"SLH_CBM"]+1
     }
+    # B2-a dok_cCBM:      dok>=1, sum(selcbm)>=1
+    if (tmp_cazy_df_expan[tmp_cazy_df_expan$tmp_cazy %in% 'dockerin','Freq']>=1 & sum(tmp_cazy_df_expan$Freq[tmp_cazy_df_expan$tmp_cazy %in% cCBM])>=1)
+    {
+      Abundance_of_cazy_gene_groupII[Abundance_of_cazy_gene_groupII$genome %in% groupII_genomes_names[j],"dok_cCBM"]=Abundance_of_cazy_gene_groupII[Abundance_of_cazy_gene_groupII$genome %in% groupII_genomes_names[j],"dok_cCBM"]+1
+    }
+    # B2'-a dok_CBM(_gh):      slh>=1, sum(cbm)>=1
+    if (tmp_cazy_df_expan[tmp_cazy_df_expan$tmp_cazy %in% 'dockerin','Freq']>=1 & sum(tmp_cazy_df_expan$Freq[tmp_cazy_df_expan$tmp_cazy %in% all_CBM])>=1)
+    {
+      Abundance_of_cazy_gene_groupII[Abundance_of_cazy_gene_groupII$genome %in% groupII_genomes_names[j],"dok_CBM"]=Abundance_of_cazy_gene_groupII[Abundance_of_cazy_gene_groupII$genome %in% groupII_genomes_names[j],"dok_CBM"]+1
+    }
     # C cGH_cCBM(_gh):     sum(slegh>=1, sum(selcbm)>=1
     if (sum(tmp_cazy_df_expan$Freq[tmp_cazy_df_expan$tmp_cazy %in% cGH])>=1 & sum(tmp_cazy_df_expan$Freq[tmp_cazy_df_expan$tmp_cazy %in% cCBM])>=1)
     {
@@ -593,10 +628,10 @@ for (j in 1: length(groupII_genomes_names))
     }
     ######
     #SLH_cohesin
-    if (tmp_cazy_df_expan[tmp_cazy_df_expan$tmp_cazy %in% 'SLH','Freq']>=1 & tmp_cazy_df_expan[tmp_cazy_df_expan$tmp_cazy %in% 'cohesin','Freq']>=1)
-    {
-      Abundance_of_cazy_gene_groupII[Abundance_of_cazy_gene_groupII$genome %in% groupII_genomes_names[j],"SLH_cohesin"]=Abundance_of_cazy_gene_groupII[Abundance_of_cazy_gene_groupII$genome %in% groupII_genomes_names[j],"SLH_cohesin"]+1 
-    }
+    #if (tmp_cazy_df_expan[tmp_cazy_df_expan$tmp_cazy %in% 'SLH','Freq']>=1 & tmp_cazy_df_expan[tmp_cazy_df_expan$tmp_cazy %in% 'cohesin','Freq']>=1)
+    #{
+    #  Abundance_of_cazy_gene_groupII[Abundance_of_cazy_gene_groupII$genome %in% groupII_genomes_names[j],"SLH_cohesin"]=Abundance_of_cazy_gene_groupII[Abundance_of_cazy_gene_groupII$genome %in% groupII_genomes_names[j],"SLH_cohesin"]+1 
+    #}
     #exo_dok
     if (tmp_cazy_df_expan[tmp_cazy_df_expan$tmp_cazy %in% 'dockerin','Freq']>=1 & sum(tmp_cazy_df_expan$Freq[tmp_cazy_df_expan$tmp_cazy %in% exo])>=1)
     {
@@ -642,14 +677,21 @@ groupII_genome_categorization<-Abundance_of_cazy_gene_groupII
 groupII_genome_categorization<-within(groupII_genome_categorization,{
   category<-NA
   category[attach_scaffold>=1]<-"Group II-a"
-  category[attach_scaffold_0>=1 & attach_scaffold_0t>=1] <-"Group II-a"
-  category[attach_scaffold==0 & attach_scaffold_0>=1 & attach_scaffold_0t==0 & SLH_cCBM>=1] <-"Group II-b"
-  category[attach_scaffold==0 & attach_scaffold_0 ==0 & free_scaffold>=1 & SLH_cCBM>=1]<-"Group II-b"
-  category[attach_scaffold==0 & attach_scaffold_0>=1 & attach_scaffold_0t==0 & SLH_cCBM==0]<-"Group II-c"
-  category[attach_scaffold==0 & attach_scaffold_0==0 & free_scaffold>=1 & SLH_cCBM==0 ]<-"Group II-c"
-  category[attach_scaffold==0 & attach_scaffold_0==0 & free_scaffold==0 & SLH_cCBM>=1]<-"Group II-d"
-  category[attach_scaffold==0 & attach_scaffold_0==0 & free_scaffold==0 & SLH_cCBM==0 & sle_GH>=1]<-"Group II-e"
-  category[attach_scaffold==0 & attach_scaffold_0==0 & free_scaffold==0 & SLH_cCBM==0 & sle_GH==0]<-"Group II-f"
+  #category[attach_scaffold_0>=1] <-"Group II-a"
+  category[attach_scaffold==0 & attach_scaffold_0>=1 & attach_scaffold_0t>=1] <-"Group II-a"
+  category[attach_scaffold==0 & attach_scaffold_0>=1 & attach_scaffold_0t==0 & SLH_CBM>=1] <-"Group II-b"
+  #category[attach_scaffold==0 & attach_scaffold_0>=1 & attach_scaffold_0t==0 & SLH_cCBM>=1] <-"Group II-b"
+  category[attach_scaffold==0 & attach_scaffold_0>=1 & attach_scaffold_0t==0 & SLH_CBM==0] <-"Group II-b2"
+  category[attach_scaffold==0 & attach_scaffold_0 ==0 & free_scaffold>=1 & SLH_CBM>=1]<-"Group II-b"
+  #category[attach_scaffold==0 & attach_scaffold_0 ==0 & free_scaffold>=1 & SLH_cCBM>=1]<-"Group II-b"
+  category[attach_scaffold==0 & attach_scaffold_0 ==0 & free_scaffold>=1 & attach_scaffold_0t>=1 & dok_CBM>=1]<-"Group II-b"
+  category[attach_scaffold==0 & attach_scaffold_0 ==0 & free_scaffold>=1 & SLH_CBM==0 & attach_scaffold_0t>=1 & dok_CBM==0]<-"Group II-b2"
+  category[attach_scaffold==0 & attach_scaffold_0==0 & free_scaffold>=1 & SLH_CBM==0 & attach_scaffold_0t==0]<-"Group II-c"
+  category[attach_scaffold==0 & attach_scaffold_0==0 & free_scaffold==0 & SLH_CBM>=1]<-"Group II-d"
+  category[attach_scaffold==0 & attach_scaffold_0==0 & free_scaffold==0 & attach_scaffold_0t>=1 & dok_CBM>=1]<-"Group II-d"
+  category[attach_scaffold==0 & attach_scaffold_0==0 & free_scaffold==0 & SLH_CBM==0 & attach_scaffold_0t>=1 & dok_CBM==0]<-"Group II-d2"
+  category[attach_scaffold==0 & attach_scaffold_0==0 & free_scaffold==0 & SLH_cCBM==0 & attach_scaffold_0t==0 & cGH_cCBM>=1]<-"Group II-e"
+  category[attach_scaffold==0 & attach_scaffold_0==0 & free_scaffold==0 & SLH_cCBM==0 & attach_scaffold_0t==0 & cGH_cCBM==0]<-"Group II-f"
 })
 
 #
