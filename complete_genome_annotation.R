@@ -36,7 +36,7 @@ LPMO<-c('AA9','AA10','AA11')
 exo<-c('GH6','GH9','GH48',GH5,'GH5')
 endo<-c('GH7','GH8','GH12','GH44','GH45','GH51','GH61','GH124')
 #cellulose-active GH modules, i.e., both exoglucanase and endoglucanase GH modules 
-cGH<-c(exo,endo)
+cGH<-c(exo,endo,LPMO)
 #cellulose-binding CBM modules
 cCBM<-c("CBM1","CBM2","CBM3","CBM4","CBM6","CBM7","CBM8","CBM9","CBM10","CBM11","CBM16","CBM17","CBM28","CBM30","CBM37","CBM44","CBM46","CBM49","CBM63","CBM64")
 #hemicellulose-active GH modules
@@ -232,6 +232,10 @@ Abundance_of_cazy_gene_exo_endo$free_scaffold<-c(0)
 Abundance_of_cazy_gene_exo_endo$SLH_cCBM<-c(0)
 #B'
 Abundance_of_cazy_gene_exo_endo$SLH_CBM<-c(0)
+#dok_cCBM B2-t
+Abundance_of_cazy_gene_exo_endo$dok_cCBM<-c(0)
+#dok_CBM B2'-t
+Abundance_of_cazy_gene_exo_endo$dok_CBM<-c(0)
 #C
 Abundance_of_cazy_gene_exo_endo$cGH_cCBM<-c(0)
 #C
@@ -317,6 +321,16 @@ for (j in 1: length(exo_endo_harboring_genomes_names))
     if (tmp_cazy_df_expan[tmp_cazy_df_expan$tmp_cazy %in% 'SLH','Freq']>=1 & sum(tmp_cazy_df_expan$Freq[tmp_cazy_df_expan$tmp_cazy %in% all_CBM])>=1)
     {
       Abundance_of_cazy_gene_exo_endo[Abundance_of_cazy_gene_exo_endo$bin %in% exo_endo_harboring_genomes_names[j],"SLH_CBM"]=Abundance_of_cazy_gene_exo_endo[Abundance_of_cazy_gene_exo_endo$bin %in% exo_endo_harboring_genomes_names[j],"SLH_CBM"]+1
+    }
+    # B2-a dok_cCBM:      dok>=1, sum(selcbm)>=1
+    if (tmp_cazy_df_expan[tmp_cazy_df_expan$tmp_cazy %in% 'dockerin','Freq']>=1 & sum(tmp_cazy_df_expan$Freq[tmp_cazy_df_expan$tmp_cazy %in% cCBM])>=1)
+    {
+      Abundance_of_cazy_gene_exo_endo[Abundance_of_cazy_gene_exo_endo$genome %in% exo_endo_harboring_genomes_names[j],"dok_cCBM"]=Abundance_of_cazy_gene_exo_endo[Abundance_of_cazy_gene_exo_endo$genome %in% exo_endo_harboring_genomes_names[j],"dok_cCBM"]+1
+    }
+    # B2'-a dok_CBM(_gh):      slh>=1, sum(cbm)>=1
+    if (tmp_cazy_df_expan[tmp_cazy_df_expan$tmp_cazy %in% 'dockerin','Freq']>=1 & sum(tmp_cazy_df_expan$Freq[tmp_cazy_df_expan$tmp_cazy %in% all_CBM])>=1)
+    {
+      Abundance_of_cazy_gene_exo_endo[Abundance_of_cazy_gene_exo_endo$genome %in% exo_endo_harboring_genomes_names[j],"dok_CBM"]=Abundance_of_cazy_gene_exo_endo[Abundance_of_cazy_gene_exo_endo$genome %in% exo_endo_harboring_genomes_names[j],"dok_CBM"]+1
     }
     # C cGH_cCBM(_gh):     sum(slegh>=1, sum(selcbm)>=1
     if (sum(tmp_cazy_df_expan$Freq[tmp_cazy_df_expan$tmp_cazy %in% cGH])>=1 & sum(tmp_cazy_df_expan$Freq[tmp_cazy_df_expan$tmp_cazy %in% cCBM])>=1)
@@ -437,15 +451,22 @@ GroupI_genome_categorization<-exo_endo_cazy_gene_in_assembly_unit
 GroupI_genome_categorization<-within(GroupI_genome_categorization,{
   category<-NA
   category[attach_scaffold>=1]<-"Group I-a"
-  category[attach_scaffold_0>=1 & attach_scaffold_0t>=1] <-"Group I-a"
-  category[attach_scaffold==0 & attach_scaffold_0>=1 & attach_scaffold_0t==0 & SLH_cCBM>=1] <-"Group I-b"
-  category[attach_scaffold==0 & attach_scaffold_0 ==0 & free_scaffold>=1 & SLH_cCBM>=1]<-"Group I-b"
-  category[attach_scaffold==0 & attach_scaffold_0>=1 & attach_scaffold_0t==0 & SLH_cCBM==0]<-"Group I-c"
-  category[attach_scaffold==0 & attach_scaffold_0==0 & free_scaffold>=1 & SLH_cCBM==0 ]<-"Group I-c"
-  category[attach_scaffold==0 & attach_scaffold_0==0 & free_scaffold==0 & SLH_cCBM>=1]<-"Group I-d"
-  category[attach_scaffold==0 & attach_scaffold_0==0 & free_scaffold==0 & SLH_cCBM==0 & cGH_cCBM>=1]<-"Group I-e"
-  category[attach_scaffold==0 & attach_scaffold_0==0 & free_scaffold==0 & SLH_cCBM==0 & cGH_cCBM==0]<-"Group I-f"
-  })
+  #category[attach_scaffold_0>=1] <-"Group I-a"
+  category[attach_scaffold==0 & attach_scaffold_0>=1 & attach_scaffold_0t>=1] <-"Group I-a"
+  category[attach_scaffold==0 & attach_scaffold_0>=1 & attach_scaffold_0t==0 & SLH_CBM>=1] <-"Group I-b"
+  #category[attach_scaffold==0 & attach_scaffold_0>=1 & attach_scaffold_0t==0 & SLH_cCBM>=1] <-"Group I-b"
+  category[attach_scaffold==0 & attach_scaffold_0>=1 & attach_scaffold_0t==0 & SLH_CBM==0] <-"Group I-b2"
+  category[attach_scaffold==0 & attach_scaffold_0 ==0 & free_scaffold>=1 & SLH_CBM>=1]<-"Group I-b"
+  #category[attach_scaffold==0 & attach_scaffold_0 ==0 & free_scaffold>=1 & SLH_cCBM>=1]<-"Group I-b"
+  category[attach_scaffold==0 & attach_scaffold_0 ==0 & free_scaffold>=1 & attach_scaffold_0t>=1 & dok_CBM>=1]<-"Group I-b"
+  category[attach_scaffold==0 & attach_scaffold_0 ==0 & free_scaffold>=1 & SLH_CBM==0 & attach_scaffold_0t>=1 & dok_CBM==0]<-"Group I-b2"
+  category[attach_scaffold==0 & attach_scaffold_0==0 & free_scaffold>=1 & SLH_CBM==0 & attach_scaffold_0t==0]<-"Group I-c"
+  category[attach_scaffold==0 & attach_scaffold_0==0 & free_scaffold==0 & SLH_CBM>=1]<-"Group I-d"
+  category[attach_scaffold==0 & attach_scaffold_0==0 & free_scaffold==0 & attach_scaffold_0t>=1 & dok_CBM>=1]<-"Group I-d"
+  category[attach_scaffold==0 & attach_scaffold_0==0 & free_scaffold==0 & SLH_CBM==0 & attach_scaffold_0t>=1 & dok_CBM==0]<-"Group I-d2"
+  category[attach_scaffold==0 & attach_scaffold_0==0 & free_scaffold==0 & SLH_cCBM==0 & attach_scaffold_0t==0 & cGH_cCBM>=1]<-"Group I-e"
+  category[attach_scaffold==0 & attach_scaffold_0==0 & free_scaffold==0 & SLH_cCBM==0 & attach_scaffold_0t==0 & cGH_cCBM==0]<-"Group I-f"
+})
 colnames(GroupI_genome_categorization)<-gsub("bin","genome",colnames(GroupI_genome_categorization))
 
 write.table(GroupI_genome_categorization, file="GroupI_genome_categorization.csv", sep=",", row.names=F, col.names=T, quote=F)
@@ -523,6 +544,10 @@ Abundance_of_cazy_gene_groupII$free_scaffold<-c(0)
 Abundance_of_cazy_gene_groupII$SLH_cCBM<-c(0)
 #B'
 Abundance_of_cazy_gene_groupII$SLH_CBM<-c(0)
+#dok_cCBM B2-t
+Abundance_of_cazy_gene_groupII$dok_cCBM<-c(0)
+#dok_CBM B2'-t
+Abundance_of_cazy_gene_groupII$dok_CBM<-c(0)
 #C
 Abundance_of_cazy_gene_groupII$cGH_cCBM<-c(0)
 #C
@@ -609,6 +634,16 @@ for (j in 1: length(groupII_genomes_names))
     if (tmp_cazy_df_expan[tmp_cazy_df_expan$tmp_cazy %in% 'SLH','Freq']>=1 & sum(tmp_cazy_df_expan$Freq[tmp_cazy_df_expan$tmp_cazy %in% all_CBM])>=1)
     {
       Abundance_of_cazy_gene_groupII[Abundance_of_cazy_gene_groupII$bin %in% groupII_genomes_names[j],"SLH_CBM"]=Abundance_of_cazy_gene_groupII[Abundance_of_cazy_gene_groupII$bin %in% groupII_genomes_names[j],"SLH_CBM"]+1
+    }
+    # B2-a dok_cCBM:      dok>=1, sum(selcbm)>=1
+    if (tmp_cazy_df_expan[tmp_cazy_df_expan$tmp_cazy %in% 'dockerin','Freq']>=1 & sum(tmp_cazy_df_expan$Freq[tmp_cazy_df_expan$tmp_cazy %in% cCBM])>=1)
+    {
+      Abundance_of_cazy_gene_groupII[Abundance_of_cazy_gene_groupII$genome %in% groupII_genomes_names[j],"dok_cCBM"]=Abundance_of_cazy_gene_groupII[Abundance_of_cazy_gene_groupII$genome %in% groupII_genomes_names[j],"dok_cCBM"]+1
+    }
+    # B2'-a dok_CBM(_gh):      slh>=1, sum(cbm)>=1
+    if (tmp_cazy_df_expan[tmp_cazy_df_expan$tmp_cazy %in% 'dockerin','Freq']>=1 & sum(tmp_cazy_df_expan$Freq[tmp_cazy_df_expan$tmp_cazy %in% all_CBM])>=1)
+    {
+      Abundance_of_cazy_gene_groupII[Abundance_of_cazy_gene_groupII$genome %in% groupII_genomes_names[j],"dok_CBM"]=Abundance_of_cazy_gene_groupII[Abundance_of_cazy_gene_groupII$genome %in% groupII_genomes_names[j],"dok_CBM"]+1
     }
     # C cGH_cCBM(_gh):     sum(slegh>=1, sum(selcbm)>=1
     if (sum(tmp_cazy_df_expan$Freq[tmp_cazy_df_expan$tmp_cazy %in% cGH])>=1 & sum(tmp_cazy_df_expan$Freq[tmp_cazy_df_expan$tmp_cazy %in% cCBM])>=1)
@@ -712,18 +747,40 @@ groupII_cazy_gene_in_assembly_unit<-aggregate(groupii_df_merge[,38:60], by=list(
 groupII_genome_categorization<-groupII_cazy_gene_in_assembly_unit
 
 ##### assign each draft genome to a category based on the abundance of gene patterns identified in it
+#groupII_genome_categorization<-within(groupII_genome_categorization,{
+#  category<-NA
+#  category[attach_scaffold>=1]<-"Group II-a"
+#  category[attach_scaffold_0>=1 & attach_scaffold_0t>=1] <-"Group II-a"
+#  category[attach_scaffold==0 & attach_scaffold_0>=1 & attach_scaffold_0t==0 & SLH_cCBM>=1] <-"Group II-b"
+#  category[attach_scaffold==0 & attach_scaffold_0 ==0 & free_scaffold>=1 & SLH_cCBM>=1]<-"Group II-b"
+#  category[attach_scaffold==0 & attach_scaffold_0>=1 & attach_scaffold_0t==0 & SLH_cCBM==0]<-"Group II-c"
+#  category[attach_scaffold==0 & attach_scaffold_0==0 & free_scaffold>=1 & SLH_cCBM==0 ]<-"Group II-c"
+#  category[attach_scaffold==0 & attach_scaffold_0==0 & free_scaffold==0 & SLH_cCBM>=1]<-"Group II-d"
+#  category[attach_scaffold==0 & attach_scaffold_0==0 & free_scaffold==0 & SLH_cCBM==0 & sle_GH>=1]<-"Group II-e"
+#  category[attach_scaffold==0 & attach_scaffold_0==0 & free_scaffold==0 & SLH_cCBM==0 & sle_GH==0]<-"Group II-f"
+#})
+
+
 groupII_genome_categorization<-within(groupII_genome_categorization,{
   category<-NA
   category[attach_scaffold>=1]<-"Group II-a"
-  category[attach_scaffold_0>=1 & attach_scaffold_0t>=1] <-"Group II-a"
-  category[attach_scaffold==0 & attach_scaffold_0>=1 & attach_scaffold_0t==0 & SLH_cCBM>=1] <-"Group II-b"
-  category[attach_scaffold==0 & attach_scaffold_0 ==0 & free_scaffold>=1 & SLH_cCBM>=1]<-"Group II-b"
-  category[attach_scaffold==0 & attach_scaffold_0>=1 & attach_scaffold_0t==0 & SLH_cCBM==0]<-"Group II-c"
-  category[attach_scaffold==0 & attach_scaffold_0==0 & free_scaffold>=1 & SLH_cCBM==0 ]<-"Group II-c"
-  category[attach_scaffold==0 & attach_scaffold_0==0 & free_scaffold==0 & SLH_cCBM>=1]<-"Group II-d"
-  category[attach_scaffold==0 & attach_scaffold_0==0 & free_scaffold==0 & SLH_cCBM==0 & sle_GH>=1]<-"Group II-e"
-  category[attach_scaffold==0 & attach_scaffold_0==0 & free_scaffold==0 & SLH_cCBM==0 & sle_GH==0]<-"Group II-f"
+  #category[attach_scaffold_0>=1] <-"Group II-a"
+  category[attach_scaffold==0 & attach_scaffold_0>=1 & attach_scaffold_0t>=1] <-"Group II-a"
+  category[attach_scaffold==0 & attach_scaffold_0>=1 & attach_scaffold_0t==0 & SLH_CBM>=1] <-"Group II-b"
+  #category[attach_scaffold==0 & attach_scaffold_0>=1 & attach_scaffold_0t==0 & SLH_cCBM>=1] <-"Group II-b"
+  category[attach_scaffold==0 & attach_scaffold_0>=1 & attach_scaffold_0t==0 & SLH_CBM==0] <-"Group II-b2"
+  category[attach_scaffold==0 & attach_scaffold_0 ==0 & free_scaffold>=1 & SLH_CBM>=1]<-"Group II-b"
+  #category[attach_scaffold==0 & attach_scaffold_0 ==0 & free_scaffold>=1 & SLH_cCBM>=1]<-"Group II-b"
+  category[attach_scaffold==0 & attach_scaffold_0 ==0 & free_scaffold>=1 & attach_scaffold_0t>=1 & dok_CBM>=1]<-"Group II-b"
+  category[attach_scaffold==0 & attach_scaffold_0 ==0 & free_scaffold>=1 & SLH_CBM==0 & attach_scaffold_0t>=1 & dok_CBM==0]<-"Group II-b2"
+  category[attach_scaffold==0 & attach_scaffold_0==0 & free_scaffold>=1 & SLH_CBM==0 & attach_scaffold_0t==0]<-"Group II-c"
+  category[attach_scaffold==0 & attach_scaffold_0==0 & free_scaffold==0 & SLH_CBM>=1]<-"Group II-d"
+  category[attach_scaffold==0 & attach_scaffold_0==0 & free_scaffold==0 & attach_scaffold_0t>=1 & dok_CBM>=1]<-"Group II-d"
+  category[attach_scaffold==0 & attach_scaffold_0==0 & free_scaffold==0 & SLH_CBM==0 & attach_scaffold_0t>=1 & dok_CBM==0]<-"Group II-d2"
+  category[attach_scaffold==0 & attach_scaffold_0==0 & free_scaffold==0 & SLH_cCBM==0 & attach_scaffold_0t==0 & cGH_cCBM>=1]<-"Group II-e"
+  category[attach_scaffold==0 & attach_scaffold_0==0 & free_scaffold==0 & SLH_cCBM==0 & attach_scaffold_0t==0 & cGH_cCBM==0]<-"Group II-f"
 })
+
 colnames(groupII_genome_categorization)<-gsub("bin","genome",colnames(groupII_genome_categorization))
 
 #write.table(groupII_genome_categorization, file="groupII_genome_categorization.csv", sep=",", row.names=F, col.names=T, quote=F)
