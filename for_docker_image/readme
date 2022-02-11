@@ -1,5 +1,5 @@
 ####---------------section1. data preparation
-#---for the entie procedure we will be needing the following:
+#---for the entire procedure we will be needing the following:
 #---1) copy all the .out.dm.ps files in the folder named as [dbCAN_results] generated from the dbCAN annotation platform to the "01_data" folder, in my case the root directory #-where this "01_data" folder locates is "Desktop/for_docker_image"
 #---2) R script in the "02_code" folder as provided
 #---3) Dockerfile as provided
