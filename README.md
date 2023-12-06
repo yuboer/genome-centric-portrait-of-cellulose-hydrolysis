@@ -1,5 +1,5 @@
 Genome-centric portrait of the anaerobes’ cellulolytic competency
-This pipeline is developed to pair the dbCAN annotation platform to interpret genomes of anaerobes on their specific function niche of cellulose hydrolysis
+This pipeline is developed to pair the dbCAN annotation platform to interpret genomes of anaerobes on the specific function niche of cellulose hydrolysis
 
 -------------------------------------------------------------------------------------------------------------------------------------
 
